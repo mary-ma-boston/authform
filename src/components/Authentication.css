@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form {
+    max-width: 80rem;
+    margin: 1rem auto;
+    position: relative;
+}
+
+.form label, .form input {
+    display: block;
+    /* width: 100%; */
+    margin: 10px 0;
+}
+
+.loginButton {
+    border: none;
+    position: absolute;
+    right: 0px;
+    margin-top: 20px;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+}
