@@ -25,3 +25,12 @@
     padding: 0.5rem 1.5rem;
     border-radius: 4px;
 }
+
+.loginButton:hover{
+    background-color:green;
+}
+
+.loginButton:focus {
+    background-color: yellow;
+}
+

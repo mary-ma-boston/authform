@@ -2,55 +2,65 @@ import React, {useState} from 'react';
 
 import './Authentication.css';
 
-const Authentication = () => {
+const Authentication = (props) => {
     const [inputUsername, setInputUsername] = useState('');
     const [inputPassword, setInputPassword] = useState('');
-    const [isSubmited, setIsSubmited] = useState(false);
-    const [islogging, setIsLogging] = useState(false);
+
+    const [usernameIsValid, setUsernameIsValid] = useState(false);
+    const [passwordIsValid, setPasswordIsValid] = useState(false);
+ 
 
     const inputUsernameHandler = (e) => {
         setInputUsername(e.target.value);
-        console.log('user'+e.target.value)
+      
+        let newUsername = e.target.value;
+        if(newUsername.length > 0) {
+           setUsernameIsValid(true);
+        } else {
+            setUsernameIsValid(false);
+        }
     };
 
     const inputPasswordHandler = (e) => {
         setInputPassword(e.target.value);
-        console.log('password'+e.target.value)
+        
+        let newPassword = e.target.value;
+        if(newPassword.length > 0) {
+           setPasswordIsValid(true);
+        } else {
+            setPasswordIsValid(false);
+        } 
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('submit')
-        setIsSubmited(true);
-       
+    const onHandleSubmit = (event) => {
+        event.preventDefault();
+        props.handleSubmit(inputUsername, inputPassword);   
 
-        // fetch url, if success get username and password;
-        const response = fetch('');
-        const data = response.json();
-        let username, password;
-        if(username && password) {
-            setIsLogging(true);
-            //switch to main page
-        } 
-    }
+        setInputUsername('');
+        setInputPassword('');
+        setUsernameIsValid(false);
+        setPasswordIsValid(false);
 
+    };
 
+    const buttonIsAble = usernameIsValid && passwordIsValid; 
+        
 
     return (
         <div className='container'>
             <h1>Login in</h1>
-            <form className='form' onSubmit={handleSubmit}>
+            <form className='form' onSubmit={onHandleSubmit}>
                 <div>
-                    <label htmlFor='username'>Username  </label>
-                    <input type="text" id='username' value={inputUsername} onChange={inputUsernameHandler}/>
-                    {isSubmited && !inputUsername && <div>Username is required!</div>} 
+                    <label htmlFor='username-input'>Username  </label>
+                    <input type="text" id='username-input' value={inputUsername} onChange={inputUsernameHandler}/>
+                    {/* {isSubmited && !inputUsername && <div>Username is required!</div>}  */}
                 </div>
                 <div>
-                    <label htmlFor='password'>Password  </label>
-                    <input type="password" id='password' onChange={inputPasswordHandler}/>
-                    {isSubmited && !inputPassword && <div>Password is required!</div>} 
+                    <label htmlFor='password-input'>Password  </label>
+                    <input type="password" id='password-input' onChange={inputPasswordHandler} value={inputPassword}/>
+                    {/* {isSubmited && !inputPassword && <div>Password is required!</div>}  */}
                 </div>
-                <button type="submit" className='loginButton'>Login</button>
+                <button type="submit" id="login-button" disabled={!buttonIsAble} className='loginButton'>Login</button>
             </form>     
         </div>      
     )
